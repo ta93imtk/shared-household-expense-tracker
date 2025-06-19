@@ -1,9 +1,9 @@
 import Link from 'next/link'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 
+import { getAuthenticatedUser } from '@/lib/auth'
 import { calculateSettlements } from '@/lib/calculate-settlements'
 import { prisma } from '@/lib/prisma'
-import { createClient } from '@/lib/supabase/server'
 
 interface SettlePageProps {
   params: Promise<{
@@ -13,14 +13,7 @@ interface SettlePageProps {
 
 export default async function SettlePage({ params }: SettlePageProps) {
   const { id } = await params
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    redirect('/login')
-  }
+  const user = await getAuthenticatedUser()
 
   const group = await prisma.group.findFirst({
     where: {

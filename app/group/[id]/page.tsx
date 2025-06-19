@@ -1,9 +1,9 @@
 import Link from 'next/link'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
+import { getAuthenticatedUser } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-import { createClient } from '@/lib/supabase/server'
 
 import { InviteLink } from './invite-link'
 
@@ -15,14 +15,7 @@ interface GroupPageProps {
 
 export default async function GroupPage({ params }: GroupPageProps) {
   const { id } = await params
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    redirect('/login')
-  }
+  const user = await getAuthenticatedUser()
 
   const group = await prisma.group.findFirst({
     where: {

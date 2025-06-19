@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 
+import { getAuthenticatedUser } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-import { createClient } from '@/lib/supabase/server'
 
 import { JoinButton } from './join-button'
 
@@ -13,14 +13,7 @@ interface JoinPageProps {
 
 export default async function JoinPage({ params }: JoinPageProps) {
   const { inviteCode } = await params
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    redirect(`/login?redirect=/join/${inviteCode}`)
-  }
+  const user = await getAuthenticatedUser()
 
   const group = await prisma.group.findUnique({
     where: {

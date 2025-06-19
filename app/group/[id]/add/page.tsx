@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 
+import { getAuthenticatedUser } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-import { createClient } from '@/lib/supabase/server'
 
 import { ExpenseForm } from './expense-form'
 
@@ -14,14 +14,7 @@ interface AddExpensePageProps {
 
 export default async function AddExpensePage({ params }: AddExpensePageProps) {
   const { id } = await params
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    redirect('/login')
-  }
+  const user = await getAuthenticatedUser()
 
   const group = await prisma.group.findFirst({
     where: {
