@@ -39,6 +39,7 @@ export function calculateSettlements(
   
   expenses.forEach(expense => {
     const current = userPayments.get(expense.paidBy) || 0
+
     userPayments.set(expense.paidBy, current + expense.amount)
   })
   
@@ -88,6 +89,7 @@ export function calculateSettlements(
     debtor.balance += amount
     
     if (creditor.balance < 0.01) creditorIndex++
+
     if (debtor.balance > -0.01) debtorIndex++
   }
   

@@ -28,7 +28,7 @@
 ## 🔐 コア機能（MVP）
 
 - [x] ユーザー登録 / ログイン
-- [x] グループ作成・参加
+- [x] グループ作成・参加（招待リンク機能）
 - [x] 支出の記録（誰がいくら立て替えたか）
 - [x] 精算ロジックによるバランス表示（「誰が誰にいくら渡すと均等か」）
 
@@ -157,6 +157,46 @@
 
 - ヘッダーにログアウトボタン
 - /logout エンドポイント
+
+---
+
+## 🚀 デプロイ手順
+
+### 必要な環境変数
+
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Database
+DATABASE_URL=your_database_url
+
+# App URL (本番環境)
+NEXT_PUBLIC_APP_URL=https://your-app-domain.com
+```
+
+### セットアップ
+
+1. **Supabaseプロジェクトの作成**
+   - [Supabase](https://supabase.com) でプロジェクトを作成
+   - APIキーとURLを取得
+
+2. **データベースのセットアップ**
+
+   ```bash
+   # Prismaでスキーマを適用
+   npx prisma db push
+
+   # SQLマイグレーションを実行
+   psql $DATABASE_URL -f supabase/migrations/002_auth_user_sync.sql
+   psql $DATABASE_URL -f supabase/migrations/20250619091755_fix_user_trigger.sql
+   ```
+
+3. **Vercelへのデプロイ（推奨）**
+   - GitHubリポジトリと連携
+   - 環境変数を設定
+   - デプロイ
 
 ---
 

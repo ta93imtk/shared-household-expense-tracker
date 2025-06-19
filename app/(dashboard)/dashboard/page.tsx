@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 
+import { Button } from '@/components/ui/button'
 import { prisma } from '@/lib/prisma'
 import { createClient } from '@/lib/supabase/server'
 
@@ -52,9 +53,16 @@ export default async function DashboardPage() {
 
   return (
     <div className="container mx-auto py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">ダッシュボード</h1>
-        <p className="mt-2 text-gray-600">ようこそ、{user.email}さん</p>
+      <div className="mb-8 flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">ダッシュボード</h1>
+          <p className="mt-2 text-gray-600">ようこそ、{user.email}さん</p>
+        </div>
+        <form action="/auth/logout" method="post">
+          <Button variant="outline" type="submit">
+            ログアウト
+          </Button>
+        </form>
       </div>
 
       <div className="grid gap-8 md:grid-cols-2">
