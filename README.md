@@ -27,7 +27,7 @@
 
 ## 🔐 コア機能（MVP）
 
-- [x] ユーザー登録 / ログイン
+- [x] Google認証によるログイン
 - [x] グループ作成・参加（招待リンク機能）
 - [x] 支出の記録（誰がいくら立て替えたか）
 - [x] 精算ロジックによるバランス表示（「誰が誰にいくら渡すと均等か」）
@@ -38,8 +38,7 @@
 
 | パス                | 概要                               |
 | ------------------- | ---------------------------------- |
-| `/signup`           | 新規登録ページ                     |
-| `/login`            | ログインページ                     |
+| `/login`            | ログインページ（Google認証）        |
 | `/dashboard`        | 所属グループ一覧 or 新規作成ページ |
 | `/group/:id`        | グループ詳細ページ（支出一覧）     |
 | `/group/:id/add`    | 支出追加ページ                     |
@@ -171,9 +170,11 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 # Database
 DATABASE_URL=your_database_url
+DIRECT_URL=your_direct_database_url
 
-# App URL (本番環境)
-NEXT_PUBLIC_APP_URL=https://your-app-domain.com
+# Google OAuth (ローカル開発用)
+SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID=your_google_client_id
+SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET=your_google_client_secret
 ```
 
 ### セットアップ
@@ -182,7 +183,17 @@ NEXT_PUBLIC_APP_URL=https://your-app-domain.com
    - [Supabase](https://supabase.com) でプロジェクトを作成
    - APIキーとURLを取得
 
-2. **データベースのセットアップ**
+2. **Google OAuth認証の設定**
+   - Google Cloud ConsoleでOAuth 2.0クライアントIDを作成
+   - 承認済みリダイレクトURIに以下を追加：
+     - ローカル開発: `http://localhost:54321/auth/v1/callback`
+     - 本番環境: `https://your-project.supabase.co/auth/v1/callback`
+     - プレビュー環境: `https://preview-project.supabase.co/auth/v1/callback`
+   - Supabase DashboardでGoogle認証を有効化し、Client IDとSecretを設定
+
+   > **重要**: プレビュー環境や本番環境では、Google側のOAuth設定で適切なリダイレクトURLを登録する必要があります
+
+3. **データベースのセットアップ**
 
    ```bash
    # Prismaでスキーマを適用
@@ -193,7 +204,7 @@ NEXT_PUBLIC_APP_URL=https://your-app-domain.com
    psql $DATABASE_URL -f supabase/migrations/20250619091755_fix_user_trigger.sql
    ```
 
-3. **Vercelへのデプロイ（推奨）**
+4. **Vercelへのデプロイ（推奨）**
    - GitHubリポジトリと連携
    - 環境変数を設定
    - デプロイ

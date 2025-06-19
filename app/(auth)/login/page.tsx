@@ -1,25 +1,21 @@
-import Link from 'next/link'
-
-import { login } from '@/app/actions/auth'
-
-import { LoginForm } from './login-form'
+import { GoogleLoginButton } from './google-login-button'
 
 export default function LoginPage() {
   return (
-    <>
-      <div className="text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900">
-          アカウントにログイン
+    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          ログイン
         </h2>
-        <p className="mt-2 text-sm text-gray-600">
-          アカウントをお持ちでない方は{' '}
-          <Link href="/signup" className="font-medium text-blue-600 hover:text-blue-500">
-            新規登録
-          </Link>
-        </p>
       </div>
 
-      <LoginForm action={login} />
-    </>
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm space-y-6">
+        <GoogleLoginButton />
+        
+        <p className="text-center text-sm text-gray-500">
+          初めてご利用の方もGoogleアカウントでログインできます
+        </p>
+      </div>
+    </div>
   )
 }

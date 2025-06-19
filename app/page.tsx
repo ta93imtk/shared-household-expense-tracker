@@ -9,14 +9,9 @@ export default function Home() {
       <header className="border-b bg-white/80 backdrop-blur-sm">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <h1 className="text-xl font-bold">家計共有アプリ</h1>
-          <div className="flex gap-2">
-            <Button variant="ghost" asChild>
-              <Link href="/login">ログイン</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/signup">新規登録</Link>
-            </Button>
-          </div>
+          <Button variant="ghost" asChild>
+            <Link href="/login">ログイン</Link>
+          </Button>
         </div>
       </header>
 
@@ -30,14 +25,9 @@ export default function Home() {
           <br />
           複雑な計算はアプリにお任せ
         </p>
-        <div className="flex justify-center gap-4">
-          <Button size="lg" asChild>
-            <Link href="/signup">無料で始める</Link>
-          </Button>
-          <Button size="lg" variant="outline" asChild>
-            <Link href="/login">ログインする</Link>
-          </Button>
-        </div>
+        <Button size="lg" asChild>
+          <Link href="/login">始める</Link>
+        </Button>
       </section>
 
       {/* 特徴セクション */}
@@ -120,7 +110,7 @@ export default function Home() {
           <h3 className="mb-4 text-3xl font-bold">お金の管理でもう悩まない</h3>
           <p className="mb-8 text-xl">今すぐ始めて、快適なシェア生活を</p>
           <Button size="lg" variant="secondary" asChild>
-            <Link href="/signup">無料アカウントを作成</Link>
+            <Link href="/login">今すぐ始める</Link>
           </Button>
         </div>
       </section>
