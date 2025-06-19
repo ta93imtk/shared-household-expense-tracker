@@ -12,7 +12,7 @@ export type GroupActionState = {
 }
 
 export async function createGroup(
-  prevState: GroupActionState,
+  _prevState: GroupActionState,
   formData: FormData
 ): Promise<GroupActionState> {
   const supabase = await createClient()
