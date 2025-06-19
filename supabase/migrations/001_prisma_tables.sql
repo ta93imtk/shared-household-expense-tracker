@@ -1,0 +1,3 @@
+-- Placeholder migration
+-- Tables are created by Prisma via npm run db:push
+-- This file exists to maintain migration order

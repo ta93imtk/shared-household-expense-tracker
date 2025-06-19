@@ -3,6 +3,10 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 
 export async function updateSession(request: NextRequest) {
+  // 認証不要なパス
+  const publicPaths = ['/login', '/signup', '/']
+  const isPublicPath = publicPaths.some((path) => request.nextUrl.pathname === path)
+
   let supabaseResponse = NextResponse.next({
     request,
   })
@@ -28,18 +32,19 @@ export async function updateSession(request: NextRequest) {
     },
   )
 
+  // パブリックパスの場合は認証チェックをスキップ
+  if (isPublicPath) {
+    return supabaseResponse
+  }
+
   // 認証状態を更新
   const {
     data: { user },
+    error,
   } = await supabase.auth.getUser()
 
-  // 保護されたルートの処理
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith('/login') &&
-    !request.nextUrl.pathname.startsWith('/signup') &&
-    request.nextUrl.pathname !== '/'
-  ) {
+  // エラーが発生した場合、または認証されていない場合
+  if (error || !user) {
     const url = request.nextUrl.clone()
 
     url.pathname = '/login'

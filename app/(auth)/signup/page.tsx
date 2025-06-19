@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { signup } from '@/app/actions/auth'
+
 import { SignupForm } from './signup-form'
 
 export default function SignupPage() {
