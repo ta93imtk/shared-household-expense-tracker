@@ -4,7 +4,7 @@ import { createServerClient } from '@supabase/ssr'
 
 export async function updateSession(request: NextRequest) {
   // 認証不要なパス
-  const publicPaths = ['/login', '/signup', '/']
+  const publicPaths = ['/login', '/signup', '/', '/auth/callback']
   const isPublicPath = publicPaths.some((path) => request.nextUrl.pathname === path)
 
   let supabaseResponse = NextResponse.next({

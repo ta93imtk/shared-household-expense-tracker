@@ -14,7 +14,6 @@ export type ActionState = {
 export async function signInWithGoogle() {
   const supabase = await createClient()
 
-  // リクエストヘッダーから現在のURLを動的に取得
   const headersList = await headers()
   const host = headersList.get('host') || 'localhost:3000'
   const protocol = headersList.get('x-forwarded-proto') || 'http'

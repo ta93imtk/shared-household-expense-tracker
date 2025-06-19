@@ -7,6 +7,12 @@ import { GroupList } from './group-list'
 export default async function DashboardPage() {
   const user = await getAuthenticatedUser()
 
+  // ユーザー情報をPrismaから取得
+  const dbUser = await prisma.user.findUnique({
+    where: { id: user.id },
+    select: { name: true, email: true },
+  })
+
   const groups = await prisma.group.findMany({
     where: {
       members: {
@@ -47,7 +53,7 @@ export default async function DashboardPage() {
     <div className="container mx-auto py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold">ダッシュボード</h1>
-        <p className="mt-2 text-gray-600">ようこそ、{user.email}さん</p>
+        <p className="mt-2 text-gray-600">ようこそ、{dbUser?.name || user.email}さん</p>
       </div>
 
       <div className="grid gap-8 md:grid-cols-2">

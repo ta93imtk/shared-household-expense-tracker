@@ -14,19 +14,24 @@
 - **スタイリング**: Tailwind CSS + shadcn/ui
 - **バリデーション**: Zod
 
-## プロジェクト構造（予定）
+## プロジェクト構造
 
-```
+```markdown
 /app
   /(auth)
-    /signup      # 新規登録
     /login       # ログイン
   /(dashboard)
     /dashboard   # グループ一覧
+    /profile     # プロフィール編集
   /group
     /[id]        # グループ詳細（支出一覧）
     /[id]/add    # 支出追加
     /[id]/settle # 精算結果表示
+  /join
+    /[inviteCode] # 招待リンクでの参加
+  /auth
+    /callback    # OAuth認証コールバック
+    /logout      # ログアウト
 ```
 
 ## データベーススキーマ
@@ -57,7 +62,14 @@
 
 - Supabase RLSによる行レベルセキュリティ
 - グループメンバーのみがグループ内のデータにアクセス可能
-- 招待コード方式でのグループ参加（予定）
+- 招待コード方式でのグループ参加
+
+### 認証フロー
+
+- Google OAuth認証を使用
+- `/auth/callback`でトークン交換
+- SQLトリガーでauth.usersとpublic.usersを自動同期
+- Middlewareで認証状態をチェック（`/auth/callback`は認証不要パスに設定）
 
 ## コーディング規約
 
