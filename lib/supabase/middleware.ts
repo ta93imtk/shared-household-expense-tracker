@@ -4,7 +4,7 @@ import { createServerClient } from '@supabase/ssr'
 
 export async function updateSession(request: NextRequest) {
   // 認証不要なパス
-  const publicPaths = ['/login', '/login/test', '/signup', '/', '/auth/callback']
+  const publicPaths = ['/login', '/login/test', '/signup', '/', '/auth/callback', '/auth/logout']
   const isPublicPath = publicPaths.some((path) => request.nextUrl.pathname === path)
 
   let supabaseResponse = NextResponse.next({
@@ -32,18 +32,15 @@ export async function updateSession(request: NextRequest) {
     },
   )
 
-  // パブリックパスの場合は認証チェックをスキップ
   if (isPublicPath) {
     return supabaseResponse
   }
 
-  // 認証状態を更新
   const {
     data: { user },
     error,
   } = await supabase.auth.getUser()
 
-  // エラーが発生した場合、または認証されていない場合
   if (error || !user) {
     const url = request.nextUrl.clone()
 

@@ -9,6 +9,9 @@ export default function TestLoginPage() {
     <div className="flex min-h-screen flex-col items-center justify-center px-4">
       <div className="w-full max-w-md space-y-8">
         <div className="text-center">
+          <Link href="/" className="inline-block mb-4 text-sm text-gray-600 hover:text-gray-900">
+            ← トップページに戻る
+          </Link>
           <h1 className="text-2xl font-bold">テストユーザーログイン</h1>
           <p className="mt-2 text-sm text-gray-600">開発・デモ用のログイン画面です</p>
         </div>
