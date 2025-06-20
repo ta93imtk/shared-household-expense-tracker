@@ -9,11 +9,11 @@
 - 立て替えや貸し借りの記憶が曖昧
 - 精算タイミングで誰がどれだけ多く払ってるのかが不明
 
-そんな生活の困りごとを技術で解決することを目的としています。
+上記のような生活の困りごとを技術で解決することを目的としています。
 
 ---
 
-## 🛠 使用技術
+## 使用技術
 
 - **TypeScript**
 - **Next.js App Router**
@@ -25,7 +25,7 @@
 
 ---
 
-## 🔐 コア機能（MVP）
+## 基本機能（MVP）
 
 - [x] Google認証によるログイン
 - [x] グループ作成・参加（招待リンク機能）
@@ -35,7 +35,7 @@
 
 ---
 
-## 🖼 画面構成
+## 画面構成案
 
 | パス                | 概要                               |
 | ------------------- | ---------------------------------- |
@@ -48,7 +48,7 @@
 
 ---
 
-## 🧩 データ構造（スキーマ案）
+## データ構造（スキーマ案）
 
 ### `users`
 
@@ -96,19 +96,14 @@
 
 ---
 
-## 🚧 今後の拡張案（任意）
-
-- 精算履歴の保存
-- 支出のカテゴリ分けとグラフ可視化
-- グループ内でのコメント機能
-- LINE通知やSlack Webhookなどの外部連携
+## 今後の拡張案
 
 ### その他
 
 #### 1. 支出の編集・削除
 
 - 自分が追加した支出の編集
-- 削除機能（ソフトデリート）
+- 削除機能
 
 #### 2. 支出のカテゴリ分類
 
@@ -119,6 +114,7 @@
 
 - 新しい支出が追加されたとき
 - 精算タイミングのリマインダー
+- LINEやSlack等の外部連携
 
 #### 4. 支出の詳細情報
 
@@ -155,7 +151,7 @@
 
 ---
 
-## 🚀 デプロイ手順
+## デプロイ手順
 
 ### 必要な環境変数
 
@@ -172,7 +168,7 @@ DIRECT_URL=your_direct_database_url
 SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID=your_google_client_id
 SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET=your_google_client_secret
 
-# Supabase Service Role Key (シードデータ作成用)
+# Supabase Service Role Key (seed用)
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 ```
 
@@ -187,10 +183,9 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
    - 承認済みリダイレクトURIに以下を追加：
      - ローカル開発: `http://localhost:54321/auth/v1/callback`
      - 本番環境: `https://your-project.supabase.co/auth/v1/callback`
-     - プレビュー環境: `https://preview-project.supabase.co/auth/v1/callback`
    - Supabase DashboardでGoogle認証を有効化し、Client IDとSecretを設定
 
-   > **重要**: プレビュー環境や本番環境では、Google側のOAuth設定で適切なリダイレクトURLを登録する必要があります
+   > **注意**: プレビュー環境や本番環境では、Google側のOAuth設定で適切なリダイレクトURLを登録する必要があります
 
 3. **データベースのセットアップ**
 
@@ -224,5 +219,7 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 
 ## 制作背景
 
-このアプリは、実生活で「同棲時の家計精算がめんどうだった」という課題から着想を得て開発しました。
-生活の中のちょっとした困りごとを、エンジニアリングで解決する力をアピールするために設計・構築しています。
+データのread/writeを持ち、OAuth認証を用いるサービスを、Claude CodeによるVibe Codingで作成しました。
+基本機能やデータベースの設計、コーディング規約を与え、実装に関しても、自分だったらそう実装するかどうかを逐次判断して進めました。
+
+非機能的部分における改善点は、prismaやsupabaseのクライアントが各メソッドから直接呼び出されている点です。usecase/repositoryパターンなど、再利用/変更のしやすい設計に改善する予定です。
