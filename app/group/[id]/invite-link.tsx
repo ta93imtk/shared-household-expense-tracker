@@ -24,7 +24,7 @@ export function InviteLink({ inviteCode }: InviteLinkProps) {
 
   return (
     <div className="mb-6 rounded-lg bg-blue-50 p-4">
-      <p className="text-sm font-medium text-blue-900 mb-2">招待リンク</p>
+      <p className="mb-2 text-sm font-medium text-blue-900">招待リンク</p>
       <div className="flex gap-2">
         <input
           type="text"
@@ -32,17 +32,11 @@ export function InviteLink({ inviteCode }: InviteLinkProps) {
           value={inviteUrl}
           className="flex-1 rounded border bg-white px-3 py-1 text-sm"
         />
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={copyToClipboard}
-        >
+        <Button size="sm" variant="outline" onClick={copyToClipboard}>
           {copied ? 'コピー済み' : 'コピー'}
         </Button>
       </div>
-      <p className="mt-2 text-xs text-gray-600">
-        このリンクを共有して新しいメンバーを招待できます
-      </p>
+      <p className="mt-2 text-xs text-gray-600">このリンクを共有して新しいメンバーを招待できます</p>
     </div>
   )
 }

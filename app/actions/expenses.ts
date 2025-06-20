@@ -13,7 +13,7 @@ export type ExpenseActionState = {
 export async function createExpense(
   groupId: string,
   _prevState: ExpenseActionState,
-  formData: FormData
+  formData: FormData,
 ): Promise<ExpenseActionState> {
   const supabase = await createClient()
   const {

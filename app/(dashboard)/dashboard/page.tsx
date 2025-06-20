@@ -1,4 +1,5 @@
-import { getAuthenticatedUser } from '@/lib/auth'
+import { getAuthenticatedUser } from '@/app/actions/auth'
+import { getUser } from '@/app/actions/user'
 import { prisma } from '@/lib/prisma'
 
 import { CreateGroupForm } from './create-group-form'
@@ -7,11 +8,7 @@ import { GroupList } from './group-list'
 export default async function DashboardPage() {
   const user = await getAuthenticatedUser()
 
-  // ユーザー情報をPrismaから取得
-  const dbUser = await prisma.user.findUnique({
-    where: { id: user.id },
-    select: { name: true, email: true },
-  })
+  const dbUser = await getUser()
 
   const groups = await prisma.group.findMany({
     where: {

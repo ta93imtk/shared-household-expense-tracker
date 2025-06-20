@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
-import { getAuthenticatedUser } from '@/lib/auth'
+import { getAuthenticatedUser } from '@/app/actions/auth'
 import { prisma } from '@/lib/prisma'
 
 import { ProfileForm } from './profile-form'
@@ -9,7 +9,6 @@ import { ProfileForm } from './profile-form'
 export default async function ProfilePage() {
   const user = await getAuthenticatedUser()
 
-  // Prismaからユーザー情報を取得
   const dbUser = await prisma.user.findUnique({
     where: { id: user.id },
   })

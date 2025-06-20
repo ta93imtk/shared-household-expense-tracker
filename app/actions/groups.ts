@@ -91,3 +91,23 @@ export async function joinGroup(groupId: string): Promise<GroupActionState> {
     return { error: 'グループへの参加に失敗しました' }
   }
 }
+
+export async function isGroupMember(groupId: string): Promise<boolean> {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    return false
+  }
+
+  const member = await prisma.groupMember.findFirst({
+    where: {
+      groupId: groupId,
+      userId: user.id,
+    },
+  })
+
+  return !!member
+}

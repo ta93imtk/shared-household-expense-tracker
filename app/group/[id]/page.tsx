@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+import { getAuthenticatedUser } from '@/app/actions/auth'
 import { Button } from '@/components/ui/button'
-import { getAuthenticatedUser } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
 import { InviteLink } from './invite-link'
@@ -121,7 +121,6 @@ export default async function GroupPage({ params }: GroupPageProps) {
         <div>
           <h2 className="mb-4 text-xl font-semibold">メンバー</h2>
 
-          {/* 招待リンクセクション */}
           <InviteLink inviteCode={group.inviteCode} />
 
           <div className="space-y-2">

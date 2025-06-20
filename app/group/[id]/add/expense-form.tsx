@@ -15,7 +15,7 @@ export function ExpenseForm({ groupId }: ExpenseFormProps) {
   const createExpenseWithGroupId = createExpense.bind(null, groupId)
   const [state, formAction, isPending] = useActionState(
     createExpenseWithGroupId,
-    {} as ExpenseActionState
+    {} as ExpenseActionState,
   )
 
   return (

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-import { getAuthenticatedUser } from '@/lib/auth'
+import { getAuthenticatedUser } from '@/app/actions/auth'
 import { prisma } from '@/lib/prisma'
 
 import { ExpenseForm } from './expense-form'
@@ -36,15 +36,12 @@ export default async function AddExpensePage({ params }: AddExpensePageProps) {
   }
 
   return (
-    <div className="container mx-auto py-8 max-w-2xl">
+    <div className="container mx-auto max-w-2xl py-8">
       <div className="mb-8">
-        <Link
-          href={`/group/${group.id}`}
-          className="text-blue-600 hover:text-blue-500 text-sm"
-        >
+        <Link href={`/group/${group.id}`} className="text-sm text-blue-600 hover:text-blue-500">
           ← {group.name}に戻る
         </Link>
-        <h1 className="text-3xl font-bold mt-2">支出を追加</h1>
+        <h1 className="mt-2 text-3xl font-bold">支出を追加</h1>
       </div>
 
       <ExpenseForm groupId={group.id} />

@@ -30,7 +30,7 @@ export function GroupList({ groups }: GroupListProps) {
     return (
       <div className="rounded-lg border border-dashed p-8 text-center">
         <p className="text-gray-500">まだグループがありません</p>
-        <p className="text-sm text-gray-400 mt-1">新しいグループを作成して始めましょう</p>
+        <p className="mt-1 text-sm text-gray-400">新しいグループを作成して始めましょう</p>
       </div>
     )
   }
@@ -45,7 +45,7 @@ export function GroupList({ groups }: GroupListProps) {
               <p className="text-sm text-gray-600">
                 メンバー: {group.members.length}人 | 支出記録: {group._count.expenses}件
               </p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="mt-1 text-xs text-gray-400">
                 作成者: {group.creator.name || group.creator.email}
               </p>
             </div>
