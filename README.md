@@ -171,6 +171,9 @@ DIRECT_URL=your_direct_database_url
 # Google OAuth (ローカル開発用)
 SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID=your_google_client_id
 SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET=your_google_client_secret
+
+# Supabase Service Role Key (シードデータ作成用)
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 ```
 
 ### セットアップ
@@ -200,7 +203,19 @@ SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET=your_google_client_secret
    psql $DATABASE_URL -f supabase/migrations/20250619091755_fix_user_trigger.sql
    ```
 
-4. **Vercelへのデプロイ（推奨）**
+4. **テストデータの作成（任意）**
+
+   ```bash
+   # テストユーザーとデータを作成
+   npm run db:seed
+   ```
+
+   作成されるテストユーザー：
+   - Email: `demo1@example.com` / Password: `demo123456` / Name: 田中太郎
+   - Email: `demo2@example.com` / Password: `demo123456` / Name: 佐藤花子
+   - Email: `demo3@example.com` / Password: `demo123456` / Name: 鈴木一郎
+
+5. **Vercelへのデプロイ（推奨）**
    - GitHubリポジトリと連携
    - 環境変数を設定
    - デプロイ

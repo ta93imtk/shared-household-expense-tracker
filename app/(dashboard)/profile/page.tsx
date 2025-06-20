@@ -1,6 +1,6 @@
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
-import { Header } from '@/components/ui/header'
 import { getAuthenticatedUser } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
@@ -19,13 +19,20 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header title="プロフィール設定" backHref="/dashboard" showLogout={true} />
+    <div className="container mx-auto max-w-md px-4 py-8">
+      <div className="mb-8">
+        <Link
+          href="/dashboard"
+          className="mb-4 inline-flex items-center text-sm text-gray-600 hover:text-gray-900"
+        >
+          ← ダッシュボードに戻る
+        </Link>
+        <h1 className="text-2xl font-bold">プロフィール設定</h1>
+        <p className="mt-2 text-gray-600">アカウント情報を編集できます</p>
+      </div>
 
-      <div className="container mx-auto max-w-md px-4 py-8">
-        <div className="rounded-lg bg-white p-6 shadow-sm">
-          <ProfileForm user={dbUser} />
-        </div>
+      <div className="rounded-lg bg-white p-6 shadow-sm">
+        <ProfileForm user={dbUser} />
       </div>
     </div>
   )
